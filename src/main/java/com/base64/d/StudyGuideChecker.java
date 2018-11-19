@@ -108,7 +108,7 @@ public class StudyGuideChecker {
                 //remove all the false positives that are in JSON of study guide but not visible to front end user.
                 studyGuideLinks.removeAll(KnownFalsePositives.BLACK_LIST);
                 System.out.println(studyGuideLinks);
-                totalLinksFound += studyGuideLinks.size(); 
+                totalLinksFound += studyGuideLinks.size();
 
             } catch (IOException e) {
                 e.printStackTrace();
