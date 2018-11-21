@@ -15,62 +15,60 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StudyGuideChecker {
-    int count = 0;
-    public int totalLinksFound = 0;
-    String url3 = "https://content.infinitecampus.com/sis/latest/study-guide/ad-hoc-filters-letters-and-data-viewer";
-    String decodedText = "";
-    String iframeSrc = "";
-    String date = new Date().toString();
-
-    String titleOfStudyGuide = "";
-    Set<String> studyGuideLinks = new HashSet<>();
-    Set<String> badLinks = new HashSet<>();
-
-    WriteToFile writeToFile = new WriteToFile();
 
     public void checkStudyGuides() {
+        int count = 0;
+        int totalLinksFound = 0;
 
-        for (String link2 : AllStudyGuideLinks.ALL_STUDY_GUIDES) {
+        String decodedText = "";
+        String iframeSrc;
+        //why null here?
+        String titleOfStudyGuide = null;
+
+        Set<String> studyGuideLinks = new HashSet<>();
+        Set<String> badLinks = new HashSet<>();
+
+        WriteToFile writeToFile = new WriteToFile();
+
+        for (String studyGuideLink : AllStudyGuideLinks.ALL_STUDY_GUIDES) {
             try {
-//
-//          Connect to the study guide url
-                Document doc3 = Jsoup.connect(link2).get();
 
-//            grab the iframe
-                Element iframe = doc3.select("iframe").first();
+                //Connect to the study guide url
+                Document wrapperDocument = Jsoup.connect(studyGuideLink).get();
 
-//            get iframe scr url
+                //Grab the iframe
+                Element iframe = wrapperDocument.select("iframe").first();
+
+                //Get iframe scr url
                 iframeSrc = iframe.attr("src");
 
-//            connect to the iframe source url
-                Document doc = Jsoup.connect(iframeSrc).get();
+                //Connect to the iframe source url
+                Document studyGuideDocument = Jsoup.connect(iframeSrc).get();
 
-                titleOfStudyGuide = doc3.title();
+                titleOfStudyGuide = wrapperDocument.title();
                 System.out.println(titleOfStudyGuide + " " + iframeSrc);
 
-//            get the script tag info
-                Elements scriptTag = doc.getElementsByTag("script");
+                //Get the script tag info
+                Elements scriptTag = studyGuideDocument.getElementsByTag("script");
                 String jsScripts = scriptTag.toString();
 
-//            match any string of characters over 100 in length.
-                String patternString = "(\\w{100,}.+)";
+                //Match any string of characters over 100 in length.
+                Pattern courseDataPattern = Pattern.compile("(\\w{100,}.+)");
 
-                Pattern pattern = Pattern.compile(patternString);
+                Matcher courseDataMatcher = courseDataPattern.matcher(jsScripts);
 
-                Matcher matcher = pattern.matcher(jsScripts);
-//            System.out.println(matcher);
-                String foundBase64String = "";
-                while (matcher.find()) {
+                String base64String = "";
+                while (courseDataMatcher.find()) {
                     System.out.println("--------");
 
-                    foundBase64String = matcher.group(1);
+                    base64String = courseDataMatcher.group(1);
                 }
-                //reduced the giant string by 2 because it included the " and the ;
-                String trimFoundBase64String = foundBase64String.substring(0, (foundBase64String.length() - 2));
+                //Reduced the giant string by 2 because it included the " and the ;
+                String trimFoundBase64String = base64String.substring(0, (base64String.length() - 2));
 
-                //put in this try block because one study guide had different script tag layout and threw error.
+                //Put in this try block because one study guide had different script tag layout and threw error.
                 try {
-                    // decoding a base64 string and putting into a byte array
+                    // Decoding a base64 string and putting into a byte array
                     byte[] decodedArr = Base64.getDecoder().decode(trimFoundBase64String);
                     decodedText = new String(decodedArr, "UTF-8");
                     //System.out.println("decoded base64: " + decodedText);
@@ -81,31 +79,29 @@ public class StudyGuideChecker {
                     System.out.println(titleOfStudyGuide + " not checked because of decoding error");
                 }
 
-                //      regex meaning - . means any character. + means 1 or more, * means 0 or more. ? means 0 or 1
-                //        everything in the () is pattern/matcher "group" syntax. then \" is looking for the next quote
-                String patternString2 = "(https://content.infinitecampus.com/sis.*?)\"";
+                // Regex meanings:
+                // . => means any character
+                // + => means 1 or more
+                // * => means 0 or more
+                // ? +> means 0 or 1
+                // Everything in the () is courseDataPattern/courseDataMatcher "group" syntax. then \" is looking for the next quote
+                Pattern contentLinkPattern = Pattern.compile("(https://content.infinitecampus.com/sis.*?)\"");
 
-                Pattern pattern2 = Pattern.compile(patternString2);
+                Matcher contentLinkMatcher = contentLinkPattern.matcher(decodedText);
+                //System.out.println("This is the courseDataMatcher " + contentLinkMatcher);
 
 
-                Matcher matcher2 = pattern2.matcher(decodedText);
-                //System.out.println("This is the matcher " + matcher2);
-
-
-                while (matcher2.find()) {
+                while (contentLinkMatcher.find()) {
                     count++;
-                    //some study guide links had '\' added for unknown reason. this code checks for it and removes it before adding it to the studyGuide.
-
-                    String shorterStudyGuideLink = matcher2.group(1).replaceAll("\\\\+$", "");
-//                            .substring(0, matcher2.group(1).length() - 1);
-//                System.out.println(shorterStudyGuideLink);
-//                  links are good because regex replace all removes "\" if there.
+                    //Some study guide links had '\' added for unknown reason. this code checks for it and removes it before adding it to the studyGuide.
+                    String shorterStudyGuideLink = contentLinkMatcher.group(1).replaceAll("\\\\+$", "");
+                    //Links are good because regex replace all removes "\" if there.
                     studyGuideLinks.add(shorterStudyGuideLink);
 
                 }
 
                 System.out.println(studyGuideLinks.size() + " Unique Campus Community links found");
-                //remove all the false positives that are in JSON of study guide but not visible to front end user.
+                //Remove all the false positives that are in JSON of study guide but not visible to front end user.
                 studyGuideLinks.removeAll(KnownFalsePositives.BLACK_LIST);
                 System.out.println(studyGuideLinks);
                 totalLinksFound += studyGuideLinks.size();
@@ -117,18 +113,20 @@ public class StudyGuideChecker {
 
             int response;
             for (String link : studyGuideLinks) {
-//                Document doc2 = (Document) Jsoup.connect(link).response();
+
                 try {
-                    Connection connection = Jsoup.connect(link).ignoreHttpErrors(true);
+                    Connection linkConnection = Jsoup.connect(link).ignoreHttpErrors(true);
 
-
-                    Document doc2 = connection.get();
-                    response = connection.response()
+                    // Although the `linkContents` is never utilized, it is a
+                    // required call. This is because Jsoup expects that `get()`
+                    // is called before the `response()` object is available.
+                    Document linkContents = linkConnection.get();
+                    response = linkConnection.response()
                             .statusCode();
-
-                    if (response >= 400) {
+                    // Report a bad link if anything other than a "200 OK" response is returned.
+                    if (response != 200) {
                         badLinks.add(link);
-                        writeToFile.createTxtFile(titleOfStudyGuide, link, link2);
+                        writeToFile.createTxtFile(titleOfStudyGuide, link, studyGuideLink);
                     }
                 } catch (IOException ie) {
                     ie.printStackTrace();

@@ -10,27 +10,31 @@ import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import java.sql.Timestamp;
+
 import static java.lang.System.out;
 
 
 public class WriteToFile {
 
-    String date = new Date().toString();
+
 
     public void createTxtFile(String titleOfStudyGuide, String link, String link2) {
+        //String date = new Date().toString();
 
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        String date = dateFormat.format(new Date());
         try {
-            FileWriter fileWriter = new FileWriter("DeadLinks.txt", true);
+            FileWriter fileWriter = new FileWriter("DeadLinks " + date + ".txt", true);
             PrintWriter printWriter = new PrintWriter(fileWriter);
 
             printWriter.println("\n");
             printWriter.println("---------------------------------------");
-            printWriter.println(date);
+
             printWriter.println(titleOfStudyGuide);
             printWriter.println("Link to Study Guide: " + link2);
             printWriter.println("This link is broken: " + link);
+            printWriter.println(date);
             printWriter.println("---------------------------------------");
 
 
