@@ -16,9 +16,15 @@ import java.util.regex.Pattern;
 
 public class StudyGuideChecker {
 
+    private int totalLinksFound = 0;
+
+    public int getTotalLinksFound() {
+        return totalLinksFound;
+    }
+
     public void checkStudyGuides() {
         int count = 0;
-        int totalLinksFound = 0;
+
 
         String decodedText = "";
         String iframeSrc;
@@ -134,7 +140,7 @@ public class StudyGuideChecker {
             }
 
             System.out.println(badLinks.size() + " Broken links: " + badLinks);
-            System.out.println(totalLinksFound + " total links checked");
+            System.out.println(getTotalLinksFound() + " total links checked");
 
 
             System.out.println("----------------------------------------------------");
@@ -149,5 +155,7 @@ public class StudyGuideChecker {
 
         writeToFile.writeTotalCount(totalLinksFoundAsString);
     }
+
+
 }
 

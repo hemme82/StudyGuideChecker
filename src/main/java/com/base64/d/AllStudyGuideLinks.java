@@ -1,6 +1,6 @@
 package com.base64.d;
 
-import java.util.*;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -8,7 +8,7 @@ public class AllStudyGuideLinks {
 
     public static final String STUDY_GUIDE_PATH = "https://content.infinitecampus.com/sis/latest/study-guide/";
 
-
+    //System.out.println(getTotalLinksFound)
 
     public static final Set<String> ALL_STUDY_GUIDES = Stream.of(
             "academic-planner-system-set-up",
@@ -34,6 +34,7 @@ public class AllStudyGuideLinks {
             "health-module-view-and-manage-student-health-information",
             "messenger-setup-contacts-and-reports",
             "messenger-for-the-end-user",
+            "online-payments-integrated-card-swipe-for-the-end-user",
             "schedule-wizard-mass-schedule-students",
             "tool-rights-user-groups",
             "user-account-creation-maintenance-and-reporting",
