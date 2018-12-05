@@ -9,5 +9,5 @@
 *.rar
 *.txt
 
-.idea
-
+.idea/
+.gradle/
