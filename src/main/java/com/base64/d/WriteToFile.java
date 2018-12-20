@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class WriteToFile {
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HHmm");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH;mm");
     private String date = dateFormat.format(new Date());
 
     public void createTxtFile(String titleOfStudyGuide, String link, String link2) {

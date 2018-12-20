@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
 
-    compile 'org.apache.commons:codec:1.11'
+    
 
     compile 'org.apache.commons:commons-csv:1.6'
 
@@ -24,4 +24,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.1.1.RELEASE'
+
+    compile 'org.slf4j:slf4j-jdk14:1.8.0-beta2'
 }
