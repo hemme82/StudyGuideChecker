@@ -34,6 +34,7 @@ public class AllStudyGuideLinks {
             "health-module-view-and-manage-student-health-information",
             "messenger-setup-contacts-and-reports",
             "messenger-for-the-end-user",
+            "online-payments-setup",
             "online-payments-integrated-card-swipe-for-the-end-user",
             "schedule-wizard-mass-schedule-students",
             "scheduling-prep-addadjust-courses-for-future-calendar",

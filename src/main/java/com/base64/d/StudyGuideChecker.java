@@ -77,6 +77,7 @@ public class StudyGuideChecker {
                     // Decoding a base64 string and putting into a byte array
                     byte[] decodedArr = Base64.getDecoder().decode(trimFoundBase64String);
                     decodedText = new String(decodedArr, "UTF-8");
+                    writeToFile.createJSONTxtFile(decodedText);
                     //System.out.println("decoded base64: " + decodedText);
                 } catch
                 (IllegalArgumentException exc) {
@@ -84,6 +85,7 @@ public class StudyGuideChecker {
                     totalLinksFound -= studyGuideLinks.size();
                     System.out.println(titleOfStudyGuide + " not checked because of decoding error");
                 }
+
 
                 // Regex meanings:
                 // . => means any character

@@ -35,11 +35,25 @@ public class WriteToFile {
             printWriter.close();
         } catch (
                 IOException exception) {
-            System.out.println("ERROR");
+            System.out.println("Bad links txt file ERROR");
             exception.printStackTrace();
 
         }
     }
+
+    public void createJSONTxtFile(String decodedText) throws IOException {
+        try{
+            FileWriter fileWriter = new FileWriter("JSON2.txt", true);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            printWriter.println(decodedText);
+
+        } catch (
+            IOException exception2) {
+                System.out.println("JSON txt file ERROR");
+                exception2.printStackTrace();
+            }
+        }
+
 
     public void writeTotalCount(String totalLinksFound){
         try {
@@ -49,5 +63,6 @@ public class WriteToFile {
             //exception handling left as an exercise for the reader
         }
     }
+
 
 }
