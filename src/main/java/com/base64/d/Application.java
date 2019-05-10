@@ -13,7 +13,11 @@ public class Application {
     public static void main(String[] args) {
 
         StudyGuideChecker checker = new StudyGuideChecker();
-        checker.checkStudyGuides();
+        try {
+            checker.checkStudyGuides();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 //        String communityURL = "https://www.cnn.com/";
 ////
 //////        Connection linkConnection = Jsoup.connect(communityURL);

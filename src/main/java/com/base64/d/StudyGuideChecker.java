@@ -7,6 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashSet;
@@ -22,7 +23,7 @@ public class StudyGuideChecker {
         return totalLinksFound;
     }
 
-    public void checkStudyGuides() {
+    public void checkStudyGuides() throws IOException {
         int count = 0;
 
 
@@ -156,6 +157,7 @@ public class StudyGuideChecker {
 //        totalLinksFoundAsString = totalLinksFound.to;
 
         writeToFile.writeTotalCount(totalLinksFoundAsString);
+
     }
 
 

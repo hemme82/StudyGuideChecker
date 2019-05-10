@@ -55,13 +55,14 @@ public class WriteToFile {
         }
 
 
-    public void writeTotalCount(String totalLinksFound){
+    public void writeTotalCount(String totalLinksFound)throws IOException{
         try {
             Files.write(Paths.get("DeadLinks " + date + ".txt"), (String.format("%s total links checked\n", totalLinksFound)).getBytes(), StandardOpenOption.APPEND);
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             //exception handling left as an exercise for the reader
         }
+
     }
 
 

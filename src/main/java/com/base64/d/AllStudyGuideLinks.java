@@ -27,6 +27,7 @@ public class AllStudyGuideLinks {
             "census---new-personfamily-set-up",
             "census---personhousehold-maintenance",
             "census-reports",
+            "course-catalogs-and-course-masters",
             "flags-and-programs",
             "grade-submission-process",
               "grading-setup",

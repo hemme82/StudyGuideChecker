@@ -17,7 +17,8 @@ public class KnownFalsePositives {
             "simulation/schedule-a-behavior-message-sc-01-27-02",
             "simulation/create-a-behavior-message-template-sc-01-27-01",
             "simulation/view-individual-student-attendance",
-            "simulation/cancel-a-user-created-future-dated-message-sc-03-08-04"
+            "simulation/cancel-a-user-created-future-dated-message-sc-03-08-04",
+            "simulation/generate-report-of-behavior-removals"
     ).map(blackList -> BLACK_LIST_PATH + blackList)
             .collect(Collectors.toSet());
 
