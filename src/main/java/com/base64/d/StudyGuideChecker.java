@@ -38,6 +38,7 @@ public class StudyGuideChecker {
         WriteToFile writeToFile = new WriteToFile();
 
         for (String studyGuideLink : AllStudyGuideLinks.ALL_STUDY_GUIDES) {
+            System.out.println("Number of Study Guides: " + AllStudyGuideLinks.ALL_STUDY_GUIDES.size());
             try {
 
                 //Connect to the study guide url

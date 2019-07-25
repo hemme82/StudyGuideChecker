@@ -28,6 +28,7 @@ public class AllStudyGuideLinks {
             "census---personhousehold-maintenance",
             "census-reports",
             "course-catalogs-and-course-masters",
+            "early-warning",
             "flags-and-programs",
             "grade-submission-process",
               "grading-setup",
