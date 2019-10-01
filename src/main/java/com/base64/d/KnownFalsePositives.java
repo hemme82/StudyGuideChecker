@@ -20,6 +20,7 @@ public class KnownFalsePositives {
             "simulation/cancel-a-user-created-future-dated-message-sc-03-08-04",
             "simulation/generate-report-of-behavior-removals",
             "video/learn/generate-report-of-behavior-events/?wrapper=embed",
+            "simulation/create-behavior-resolution-types",
             "documentation/behavior-removal-report/06399e27-d7ce-4d99-aafe-d516cded86b2/images/57125167/behavior_removalReport.png?version=2&modificationDate=1423602265303&api=v2"
     ).map(blackList -> BLACK_LIST_PATH + blackList)
             .collect(Collectors.toSet());

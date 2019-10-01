@@ -57,8 +57,8 @@ public class WriteToFile {
 
     public void writeTotalCount(String totalLinksFound)throws IOException{
         try {
-            Files.write(Paths.get("DeadLinks " + date + ".txt"), (String.format("%s total links " +
-                    "checked\n", totalLinksFound) + "Number of Study Guides: " + AllStudyGuideLinks.ALL_STUDY_GUIDES.size()).getBytes(),
+            Files.write(Paths.get("DeadLinks " + date + ".txt"), (String.format("Total links " +
+                    "checked %s\n", totalLinksFound) + " Number of Study Guides: " + AllStudyGuideLinks.ALL_STUDY_GUIDES.size()).getBytes(),
                     StandardOpenOption.APPEND);
         } catch (IOException e) {
             e.printStackTrace();
