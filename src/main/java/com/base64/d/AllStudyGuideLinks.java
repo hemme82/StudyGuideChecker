@@ -50,6 +50,7 @@ public class AllStudyGuideLinks {
             "user-account-creation-maintenance-and-reporting",
             "walk-in-scheduler-complete-or-change-a-students-schedule"
             //combining first and second part of the url.
+
     ).map(studyGuideName -> STUDY_GUIDE_PATH + studyGuideName)
             .collect(Collectors.toSet());
 

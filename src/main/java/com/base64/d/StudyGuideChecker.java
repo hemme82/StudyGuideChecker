@@ -130,6 +130,8 @@ public class StudyGuideChecker {
                     // Although the `linkContents` is never utilized, it is a
                     // required call. This is because Jsoup expects that `get()`
                     // is called before the `response()` object is available.
+
+
                     Document linkContents = linkConnection.get();
                     response = linkConnection.response()
                             .statusCode();
